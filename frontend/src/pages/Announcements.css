@@ -1,0 +1,427 @@
+
+/* =====================================
+   CONFERA ANNOUNCEMENTS
+===================================== */
+
+#announcements {
+  width: 100%;
+  min-height: 600px;
+  padding: 90px 5%;
+
+  position: relative;
+
+  background:
+    linear-gradient(
+      rgba(2, 16, 46, 0.28),
+      rgba(2, 16, 46, 0.28)
+    ),
+    url('/announcements-bg.png');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+}
+
+/* =====================================
+   MAIN WHITE BOX
+===================================== */
+
+.announcement-container {
+  width: 100%;
+  max-width: 1300px;
+
+  padding: 60px 55px;
+
+  background: #ffffff;
+
+  border: 3px solid #d9ad5b;
+  border-radius: 25px;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.3),
+    0 0 25px rgba(224, 177, 85, 0.2);
+
+  position: relative;
+  z-index: 2;
+}
+
+/* =====================================
+   HEADER
+===================================== */
+
+.announcement-header {
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.announcement-label {
+  display: inline-block;
+
+  color: #bd8c32;
+
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 5px;
+}
+
+.announcement-header h2 {
+  color: #102b59;
+
+  font-size: clamp(36px, 4vw, 55px);
+  font-weight: 800;
+
+  margin: 18px 0;
+}
+
+.announcement-header h2 span {
+  color: #c18d32;
+}
+
+.announcement-divider {
+  width: 100px;
+  height: 4px;
+
+  background: linear-gradient(
+    90deg,
+    #e5bd70,
+    #bd8525
+  );
+
+  margin: 20px auto;
+  border-radius: 5px;
+}
+
+.announcement-header p {
+  color: #465b7c;
+
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+/* =====================================
+   ANNOUNCEMENT LIST
+===================================== */
+
+.announcement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* =====================================
+   ANNOUNCEMENT CARD
+===================================== */
+
+.announcement-card {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+
+  padding: 25px;
+
+  background: #f7f9fe;
+
+  border: 1px solid #e1c17e;
+  border-left: 6px solid #c3913e;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 7px 20px rgba(16, 43, 89, 0.07);
+
+  transition: all 0.35s ease;
+}
+
+.announcement-card:hover {
+  transform: translateY(-5px);
+
+  background: #ffffff;
+
+  box-shadow:
+    0 15px 30px rgba(16, 43, 89, 0.14);
+}
+
+/* =====================================
+   ICON
+===================================== */
+
+.announcement-icon {
+  width: 65px;
+  height: 65px;
+
+  min-width: 65px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #102b59;
+  color: #f3c66e;
+
+  border: 2px solid #d9ad5b;
+  border-radius: 50%;
+}
+
+/* =====================================
+   CONTENT
+===================================== */
+
+.announcement-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.announcement-content h3 {
+  color: #102b59;
+
+  font-size: 24px;
+  font-weight: 800;
+
+  line-height: 1.5;
+
+  margin-bottom: 8px;
+}
+
+.announcement-content p {
+  color: #405779;
+
+  font-size: 17px;
+  line-height: 1.8;
+
+  margin: 0;
+}
+
+/* =====================================
+   DATE
+===================================== */
+
+.announcement-date {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 15px;
+
+  min-width: 145px;
+
+  color: #102b59;
+
+  border-left: 2px solid #d9ad5b;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.announcement-date svg {
+  color: #bd8c32;
+  flex-shrink: 0;
+}
+
+/* =====================================
+   ARROW
+===================================== */
+
+.announcement-arrow {
+  width: 48px;
+  height: 48px;
+
+  min-width: 48px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #102b59;
+  color: #ffffff;
+
+  border-radius: 50%;
+
+  transition: all 0.3s ease;
+}
+
+.announcement-card:hover .announcement-arrow {
+  background: #c18d32;
+  color: #ffffff;
+
+  transform: translateX(4px);
+}
+
+/* =====================================
+   LOADING / EMPTY / ERROR
+===================================== */
+
+.announcement-message {
+  text-align: center;
+
+  padding: 35px;
+
+  color: #102b59;
+
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* =====================================
+   FOOTER
+===================================== */
+
+.announcement-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 20px;
+
+  margin-top: 45px;
+}
+
+.announcement-footer span {
+  width: 100px;
+  height: 3px;
+
+  background: #c18d32;
+}
+
+.announcement-footer p {
+  color: #102b59;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  letter-spacing: 3px;
+  text-align: center;
+
+  margin: 0;
+}
+
+/* =====================================
+   TABLET
+===================================== */
+
+@media (max-width: 900px) {
+
+  #announcements {
+    padding: 65px 4%;
+  }
+
+  .announcement-container {
+    padding: 45px 30px;
+  }
+
+  .announcement-card {
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .announcement-content h3 {
+    font-size: 20px;
+  }
+
+  .announcement-content p {
+    font-size: 15px;
+  }
+
+  .announcement-date {
+    min-width: 110px;
+    padding: 10px;
+  }
+
+}
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 600px) {
+
+  #announcements {
+    padding: 45px 14px;
+  }
+
+  .announcement-container {
+    padding: 35px 18px;
+
+    border-radius: 16px;
+  }
+
+  .announcement-header {
+    margin-bottom: 30px;
+  }
+
+  .announcement-label {
+    font-size: 12px;
+    letter-spacing: 3px;
+  }
+
+  .announcement-header h2 {
+    font-size: 32px;
+  }
+
+  .announcement-header p {
+    font-size: 15px;
+  }
+
+  .announcement-card {
+    flex-wrap: wrap;
+    gap: 15px;
+
+    padding: 18px;
+  }
+
+  .announcement-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+  }
+
+  .announcement-icon svg {
+    width: 23px;
+  }
+
+  .announcement-content {
+    flex-basis: calc(100% - 65px);
+  }
+
+  .announcement-content h3 {
+    font-size: 18px;
+  }
+
+  .announcement-content p {
+    font-size: 14px;
+  }
+
+  .announcement-date {
+    border-left: none;
+    padding: 5px;
+    min-width: auto;
+    font-size: 13px;
+  }
+
+  .announcement-arrow {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    margin-left: auto;
+  }
+
+  .announcement-footer {
+    gap: 8px;
+    margin-top: 30px;
+  }
+
+  .announcement-footer span {
+    width: 25px;
+  }
+
+  .announcement-footer p {
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+
+}

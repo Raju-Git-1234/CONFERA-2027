@@ -1,0 +1,125 @@
+
+.confera-announcement {
+  width: 100%;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: linear-gradient(
+    100deg,
+    #0b2119 0%,
+    #123d2d 30%,
+    #1b5940 55%,
+    #123d2d 80%,
+    #0b2119 100%
+  );
+  border-bottom: 2px solid #c5a65f;
+  color: #ffffff;
+  box-shadow: 0 3px 12px rgba(10, 35, 25, 0.25);
+}
+
+.announcement-icon {
+  flex-shrink: 0;
+  padding: 0 12px 0 22px;
+  color: #d9bd79;
+}
+
+.announcement-heading {
+  flex-shrink: 0;
+  color: #e4c987;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  white-space: nowrap;
+}
+
+.announcement-divider {
+  width: 1px;
+  height: 27px;
+  background: rgba(255, 255, 255, 0.35);
+  margin: 0 18px;
+  flex-shrink: 0;
+}
+
+.announcement-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.announcement-moving-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: max-content;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 600;
+  color: #f5f0df;
+  animation: confera-slide 18s linear infinite;
+}
+
+.announcement-moving-text strong {
+  color: #d9bd79;
+  font-weight: 900;
+}
+
+.announcement-moving-text .gold-text {
+  color: #f1d99c;
+}
+
+.announcement-moving-text span {
+  color: #d9bd79;
+  font-size: 11px;
+}
+
+.announcement-year {
+  flex-shrink: 0;
+  padding: 0 22px;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #e4c987;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+@keyframes confera-slide {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.announcement-text:hover .announcement-moving-text {
+  animation-play-state: paused;
+}
+
+@media (max-width: 768px) {
+  .confera-announcement {
+    height: 52px;
+  }
+
+  .announcement-year {
+    display: none;
+  }
+
+  .announcement-heading {
+    font-size: 10px;
+  }
+
+  .announcement-icon {
+    padding-left: 10px;
+  }
+
+  .announcement-divider {
+    margin: 0 9px;
+  }
+
+  .announcement-moving-text {
+    font-size: 14px;
+  }
+}
