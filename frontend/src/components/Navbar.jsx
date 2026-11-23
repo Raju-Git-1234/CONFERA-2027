@@ -1,17 +1,124 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ChevronDown,
   Menu,
   X,
-  ArrowUpRight
+  ArrowUpRight,
+  Download,
+  CheckCircle2
 } from 'lucide-react';
+
 import './Navbar.css';
 
 function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState('');
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [isInstalled, setIsInstalled] = useState(false);
+
+  useEffect(() => {
+    const handleBeforeInstall = (event) => {
+      event.preventDefault();
+      setDeferredPrompt(event);
+    };
+
+    const handleInstalled = () => {
+      setIsInstalled(true);
+      setDeferredPrompt(null);
+    };
+
+    const standaloneQuery = window.matchMedia(
+      '(display-mode: standalone)'
+    );
+
+    const checkInstalled = async () => {
+      if (
+        standaloneQuery.matches ||
+        window.navigator.standalone === true
+      ) {
+        setIsInstalled(true);
+        return;
+      }
+
+      // Check installed related apps when supported.
+      if (
+        'getInstalledRelatedApps' in navigator
+      ) {
+        try {
+          const relatedApps =
+            await navigator.getInstalledRelatedApps();
+
+          if (relatedApps.length > 0) {
+            setIsInstalled(true);
+          }
+        } catch (error) {
+          console.log(
+            'Could not check installed apps:',
+            error
+          );
+        }
+      }
+    };
+
+    window.addEventListener(
+      'beforeinstallprompt',
+      handleBeforeInstall
+    );
+
+    window.addEventListener(
+      'appinstalled',
+      handleInstalled
+    );
+
+    standaloneQuery.addEventListener(
+      'change',
+      checkInstalled
+    );
+
+    checkInstalled();
+
+    return () => {
+      window.removeEventListener(
+        'beforeinstallprompt',
+        handleBeforeInstall
+      );
+
+      window.removeEventListener(
+        'appinstalled',
+        handleInstalled
+      );
+
+      standaloneQuery.removeEventListener(
+        'change',
+        checkInstalled
+      );
+    };
+  }, []);
+
+  const handleInstallApp = async () => {
+    if (isInstalled) {
+      return;
+    }
+
+    if (!deferredPrompt) {
+      alert(
+        'To install CONFERA 2027, open your browser menu and select Install App or Add to Home Screen.'
+      );
+      return;
+    }
+
+    await deferredPrompt.prompt();
+
+    const choice = await deferredPrompt.userChoice;
+
+    if (choice.outcome === 'accepted') {
+      setIsInstalled(true);
+    }
+
+    setDeferredPrompt(null);
+  };
 
   const closeMenu = () => {
     setMobileOpen(false);
@@ -39,9 +146,7 @@ function Navbar() {
 
     const section = document.getElementById(id);
 
-    if (!section) {
-      return;
-    }
+    if (!section) return;
 
     const sectionTop =
       section.getBoundingClientRect().top +
@@ -62,9 +167,7 @@ function Navbar() {
 
   return (
     <header className="site-header">
-
       <nav className="main-navbar">
-
         <div className="navbar-inner">
 
           {/* LOGO */}
@@ -73,18 +176,13 @@ function Navbar() {
             className="brand-logo"
             onClick={handleLinkClick('home')}
           >
-            <div className="brand-symbol">
-              C
-            </div>
+            <div className="brand-symbol">C</div>
 
             <div className="brand-text">
               <h1>
                 CONFERA <span>2027</span>
               </h1>
-
-              <p>
-                INTERNATIONAL CONFERENCE
-              </p>
+              <p>INTERNATIONAL CONFERENCE</p>
             </div>
           </a>
 
@@ -108,8 +206,6 @@ function Navbar() {
               mobileOpen ? 'show-menu' : ''
             }`}
           >
-
-            {/* HOME */}
             <a
               href="#home"
               className="nav-link"
@@ -132,7 +228,6 @@ function Navbar() {
                 }
               }}
             >
-
               <button
                 className={`nav-link dropdown-trigger ${
                   activeDropdown === 'about'
@@ -148,7 +243,6 @@ function Navbar() {
 
               {activeDropdown === 'about' && (
                 <div className="dropdown-menu">
-
                   <a
                     href="#about"
                     onClick={handleLinkClick('about')}
@@ -169,13 +263,10 @@ function Navbar() {
                   >
                     Organizing Committee
                   </a>
-
                 </div>
               )}
-
             </div>
 
-            {/* SPEAKERS */}
             <a
               href="#speakers"
               className="nav-link"
@@ -184,7 +275,6 @@ function Navbar() {
               Speakers
             </a>
 
-            {/* COMMITTEE */}
             <a
               href="#committee"
               className="nav-link"
@@ -193,7 +283,6 @@ function Navbar() {
               Committee
             </a>
 
-            {/* PAPERS */}
             <a
               href="#papers"
               className="nav-link"
@@ -202,7 +291,6 @@ function Navbar() {
               Papers
             </a>
 
-            {/* PAPER SUBMISSION */}
             <a
               href="#submission"
               className="nav-link"
@@ -211,7 +299,6 @@ function Navbar() {
               Paper Submission
             </a>
 
-            {/* PUBLICATION */}
             <a
               href="#publication"
               className="nav-link"
@@ -220,7 +307,6 @@ function Navbar() {
               Publication
             </a>
 
-            {/* ACCEPTED PAPERS */}
             <a
               href="#accepted-papers"
               className="nav-link"
@@ -229,7 +315,6 @@ function Navbar() {
               Accepted Papers
             </a>
 
-            {/* FAQ */}
             <a
               href="#faq"
               className="nav-link"
@@ -238,7 +323,6 @@ function Navbar() {
               FAQ
             </a>
 
-            {/* CONTACT */}
             <a
               href="#contact"
               className="nav-link"
@@ -246,8 +330,29 @@ function Navbar() {
             >
               Contact
             </a>
-
           </div>
+
+          {/* INSTALL APP BUTTON */}
+          <button
+            className={`install-button ${
+              isInstalled ? 'installed' : ''
+            }`}
+            onClick={handleInstallApp}
+            type="button"
+            disabled={isInstalled}
+          >
+            {isInstalled ? (
+              <>
+                <CheckCircle2 size={17} />
+                Installed
+              </>
+            ) : (
+              <>
+                <Download size={17} />
+                Install App
+              </>
+            )}
+          </button>
 
           {/* ADMIN BUTTON */}
           <Link
@@ -260,9 +365,7 @@ function Navbar() {
           </Link>
 
         </div>
-
       </nav>
-
     </header>
   );
 }

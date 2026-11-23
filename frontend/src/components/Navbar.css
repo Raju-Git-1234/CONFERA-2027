@@ -212,6 +212,35 @@
   }
 }
 
+/* INSTALL APP BUTTON */
+
+.install-button {
+  min-height: 45px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: transparent;
+  color: #E5B85C;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+  border-radius: 5px;
+  transition: 0.25s ease;
+  flex-shrink: 0;
+  border: 1px solid #E5B85C;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.install-button:hover {
+  background: #E5B85C;
+  color: #04142D;
+  transform: translateY(-2px);
+  box-shadow: 0 7px 18px rgba(229, 184, 92, 0.2);
+}
+
 /* REGISTER BUTTON */
 
 .register-button {
@@ -288,6 +317,11 @@
     padding: 0 10px;
     font-size: 11px;
   }
+
+  .install-button {
+    padding: 0 9px;
+    font-size: 11px;
+  }
 }
 
 /* MOBILE RESPONSIVE */
@@ -347,6 +381,12 @@
   .register-button {
     margin-left: 10px;
   }
+
+  .install-button {
+    margin-left: 5px;
+    min-height: 40px;
+    padding: 0 10px;
+  }
 }
 
 /* SMALL MOBILE */
@@ -384,5 +424,17 @@
     padding: 0 9px;
     font-size: 10px;
     min-height: 37px;
+  }
+
+  .install-button {
+    min-height: 37px;
+    padding: 0 7px;
+    font-size: 10px;
+    gap: 4px;
+  }
+
+  .install-button svg {
+    width: 14px;
+    height: 14px;
   }
 }
