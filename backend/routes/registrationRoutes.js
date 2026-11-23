@@ -2,7 +2,7 @@
 require("dotenv").config();
 
 const express = require("express");
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 
 function createRegistrationRouter(db) {
 
@@ -10,14 +10,8 @@ function createRegistrationRouter(db) {
 
     const router = express.Router();
 
-    // Gmail configuration
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS
-        }
-    });
+    // Resend HTTPS Email API
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     // Participant Registration API
     router.post("/", async (req, res) => {
@@ -85,14 +79,23 @@ function createRegistrationRouter(db) {
             console.log("PostgreSQL registration successful!");
             console.log("Sending notification to:", process.env.ADMIN_EMAIL);
 
-            // Send organizer notification
+            // Send organizer notification using Resend HTTPS API
             try {
 
-                const mailInfo = await transporter.sendMail({
+                if (!process.env.RESEND_API_KEY) {
+                    throw new Error("RESEND_API_KEY is missing");
+                }
 
-                    from: process.env.EMAIL_USER,
+                if (!process.env.ADMIN_EMAIL) {
+                    throw new Error("ADMIN_EMAIL is missing");
+                }
 
-                    to: process.env.ADMIN_EMAIL,
+                const { data, error } = await resend.emails.send({
+
+                    from: process.env.RESEND_FROM_EMAIL ||
+                        "CONFERA 2027 <onboarding@resend.dev>",
+
+                    to: [process.env.ADMIN_EMAIL],
 
                     subject: "CONFERA - New Participant Registration",
 
@@ -119,13 +122,17 @@ Presentation Type: ${participant.presentation_type}
                     `
                 });
 
+                if (error) {
+                    throw new Error(error.message || "Resend email failed");
+                }
+
                 console.log("EMAIL SENT SUCCESSFULLY!");
-                console.log("Email Message ID:", mailInfo.messageId);
+                console.log("Resend Email ID:", data?.id);
 
             } catch (emailError) {
 
                 console.error("EMAIL SENDING FAILED!");
-                console.error(emailError);
+                console.error(emailError.message || emailError);
             }
 
             return res.status(201).json({
@@ -155,4 +162,4 @@ Presentation Type: ${participant.presentation_type}
     return router;
 }
 
-module.exports = createRegistrationRouter;  
+module.exports = createRegistrationRouter;
